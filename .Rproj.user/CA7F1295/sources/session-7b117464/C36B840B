@@ -3,7 +3,7 @@
     "path": "~/Desktop/un-report/reports/gapminder_report.Rmd",
     "project_path": "reports/gapminder_report.Rmd",
     "type": "r_markdown",
-    "hash": "580187154",
+    "hash": "996271940",
     "contents": "",
     "dirty": false,
     "created": 1674070725119.0,
@@ -13,17 +13,18 @@
         "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "33,0",
-        "scrollLine": "34",
+        "cursorPosition": "61,9",
+        "scrollLine": "36",
         "working_dir": "project",
-        "last_setup_crc32": "7b117464bb338d19"
+        "last_setup_crc32": "7b117464bb338d19",
+        "chunk_output_type": "console"
     },
     "folds": "",
-    "lastKnownWriteTime": 1674072201,
+    "lastKnownWriteTime": 1674074856,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1674072202000,
+    "last_content_update": 1674074856100,
     "read_only": false,
     "read_only_alternatives": []
 }
