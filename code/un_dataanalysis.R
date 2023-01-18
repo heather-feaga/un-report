@@ -89,12 +89,14 @@ CO2_emmisions_dirty
 
 # add a column with mutate
 
-CO2_emmisions_dirty%>%
+CO2_emmisions <-CO2_emmisions_dirty%>%
   select(country, year, series, value)%>%
   mutate(series = recode(series, 
                          "Emissions (thousand metric tons of carbon dioxide)" = "total_emissions", 
                          "Emissions per capita (metric tons of carbon dioxide)" = "per_capita_emissions"))%>%
-  pivot_wider(names_from = series, values_from = value)
+  pivot_wider(names_from = series, values_from = value)%>%
+  filter(year == 2005)%>%
+  select(-year)
 # ^^names_from are coming from series, and the values_from takes the values from the values column
 
 #join data by finding matching variables between the population data and emissions data. However, we don't have emissions data from 2005 but we have population data from 2005 and we don't have population from 2007 but we do have emissions data. So we are going to filter for only 2005. So take CO2 emissions dirty and add 2 new lines to filter so that we only have 2005
@@ -106,9 +108,9 @@ CO2_emmisions_dirty%>%
     select(-year)
 
 #creating a new object called CO2_emmisions
-CO2_emmisions <- CO2_emmisions_dirty%>%
-  filter(year == 2005)%>%
-  select(-year)
+#CO2_emmisions <- CO2_emmisions_dirty%>%
+ # filter(year == 2005)%>%
+#  select(-year)
 
 #bringing in 2007 population data, filter only for rows 2007
 
@@ -123,3 +125,9 @@ inner_join(CO2_emmisions, gapminder_data_2007, by = "country")
 anti_join(CO2_emmisions, gapminder_data_2007, by = "country")
 
 full_join(CO2_emmisions, gapminder_data_2007)
+
+joined_CO2_pop <-inner_join(CO2_emmisions, gapminder_data_2007, by = "country")
+
+#writing a CSV
+
+write_csv(joined_CO2_pop, file = "data/joined_CO2_pop.csv")
