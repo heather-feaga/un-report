@@ -131,3 +131,56 @@ joined_CO2_pop <-inner_join(CO2_emmisions, gapminder_data_2007, by = "country")
 #writing a CSV
 
 write_csv(joined_CO2_pop, file = "data/joined_CO2_pop.csv")
+
+
+# read back in the CSV file we just wrote and make an object for it and view it
+
+CO2_joined_object <- read_csv("data/joined_CO2_pop.csv")
+
+CO2_joined_object
+
+ggplot(CO2_joined_object)+
+  aes(x = lifeExp) +
+  geom_histogram(bins = 10) +
+  theme_prism()
+
+ggsave("lifeExp_CO2_joined_plot.jpg", width = 6, height = 4)  
+
+ggplot(CO2_joined_object)+
+  aes(x = gdpPercap) +
+  geom_histogram(bins = 10) +
+  theme_prism()
+
+ggsave("gdpPercap_CO2_joined_plot.jpg", width = 6, height = 4)  
+
+ggplot(CO2_joined_object)+
+  aes(x = gdpPercap) +
+  geom_histogram(bins = 10) +
+  theme_prism()
+
+ggsave("gdpPercap_CO2_joined_plot.jpg", width = 6, height = 4) 
+
+ggsave(path = "/data","gdpPercap_CO2_joined_plot.jpg", width = 6, height = 4) 
+
+ggsave("gdpPercap_CO2_joined_plot.jpg", width = 6, height = 4) 
+
+
+CO2_joined_object%>%
+  ggplot(aes(x = gdpPercap))+
+  geom_histogram()
+
+Scatter_plot <- CO2_joined_object%>%
+  ggplot(aes(x = gdpPercap, y = per_capita_emissions))+
+  geom_point()+
+  geom_smooth(method = lm, se = FALSE)+
+  labs( x = "GDP Per Capita", y = "CO2 Emissions Per Capita (metric tons)", title = "Comparing Per Capita CO2 Emmisions and GDP")+
+  theme_classic()+
+  ggpubr::stat_regline_equation(aes(label = after_stat(rr.label)))
+
+install.packages("ggpubr")
+
+Scatter_plot
+
+ggsave(Scatter_plot, filename = "figures/Satter_plot.png", device = "png", height = 4, width = 6, units = "in", dpi = 300)
+
+getwd()
