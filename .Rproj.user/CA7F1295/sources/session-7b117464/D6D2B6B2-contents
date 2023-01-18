@@ -1,0 +1,70 @@
+library(tidyverse)
+getwd()
+gapminder_data <- read_csv("data/gapminder_data.csv")
+
+summarize(gapminder_data, averagelifeExp = mean(lifeExp), medianlifeExp=median(lifeExp))
+
+
+#learning to pipe - first you put in what you are working on (gapminder_data) and then the piping notation so you don't have to keep typing the gapminder_data
+
+gapminder_summary <-gapminder_data%>%
+  summarize(averagelifeExp=mean(lifeExp))
+
+gapminder_summary
+
+#Filtering
+gapminder_summary_2007<-gapminder_data%>%
+  filter(year == 2007)%>%
+  summarize(average = mean(lifeExp))
+
+#finding average gdppercap for the first year in the dataset
+
+#this one makes a data object
+First_year_gdp_average <- gapminder_data%>%
+  filter(year==1952)%>%
+  summarize(average = mean(gdpPercap))
+
+#this one shows the answer in the console
+gapminder_data%>%
+  filter(year==1952)%>%
+  summarize(average = mean(gdpPercap))
+
+#Using group_by()
+
+#groups by year, will report average of each year
+gapminder_data%>%
+  group_by(year)%>%
+  summarize(average = mean(lifeExp))
+
+#groups by year, will report average of each year by country
+gapminder_data%>%
+  group_by(year, continent)%>%
+  summarize(average = mean(lifeExp))
+
+#groups by year, will report average of each year by country and the stdev
+gapminder_data%>%
+  group_by(year, continent)%>%
+  summarize(average = mean(lifeExp), error = sd(lifeExp))
+
+#using mutate function to calculate a new value in a column using other columns in the data
+
+gapminder_data%>%
+  mutate(gdp = pop * gdpPercap)
+
+#mutate a new column which is population in millions
+gapminder_data%>%
+  mutate("population in millions" = pop / 1000000)
+
+#select
+gapminder_data%>%
+  select(pop, year)
+
+gapminder_data%>%
+  select(-continent)
+
+#pivot_wider
+gapminder_data%>%
+  select(country, continent, year, lifeExp)%>%
+  pivot_wider(names_from = year, values_from = lifeExp)%>%
+  View()
+
